@@ -8,7 +8,7 @@ export type CreateAlbum = Pick<IAlbum, 'name' | 'artistId'>;
 // Validation model which comes to the API.
 export class CreateAlbumDTO implements CreateAlbum {
   @IsString()
-  @MinLength(10)
+  @MinLength(2)
   @MaxLength(500)
   name: string;
 

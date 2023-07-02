@@ -6,7 +6,7 @@ const router = Router();
 
 router.post('/', upload.single('file'), async (req: Request, res: TypedResponse<TCreateResponse>) => {
   if (req.file?.filename) {
-    res.status(201).json({ id: req.file?.filename.slice(0, req.file?.filename.lastIndexOf('.')) });
+    res.status(201).json({ id: req.file?.filename });
   }
 });
 

@@ -9,12 +9,11 @@ export type FileNameCallback = (error: Error | null, filename: string) => void;
 export const fileStorage = multer.diskStorage({
   destination: (request: Request, file: Express.Multer.File, callback: DestinationCallback): void => {
     // ...Do your stuff here.
-    console.log(file);
     callback(null, path.join(__dirname, '../upload/'));
   },
 
   filename: (req: Request, file: Express.Multer.File, callback: FileNameCallback): void => {
-    callback(null, randomUUID() + '.' + file.originalname.split('.').at(-1));
+    callback(null, randomUUID() + '.' + file.originalname);
   },
 });
 

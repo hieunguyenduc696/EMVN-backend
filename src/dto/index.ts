@@ -4,3 +4,6 @@ export * from './create-playlist.dto';
 export * from './create-album.dto';
 export * from './get-track.dto';
 export * from './update-track.dto';
+export * from './get-artist.dto';
+export * from './get-album.dto';
+export * from './get-playlist.dto';

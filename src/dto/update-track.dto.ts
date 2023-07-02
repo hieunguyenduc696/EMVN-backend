@@ -15,7 +15,7 @@ export type UpdateTrack = OptionalExceptFor<
 export class UpdateTrackDTO implements UpdateTrack {
   @IsOptional()
   @IsString()
-  @MinLength(10)
+  @MinLength(2)
   @MaxLength(500)
   title: string;
 

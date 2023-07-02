@@ -7,7 +7,7 @@ export type CreatePlaylist = Pick<IPlaylist, 'name'>;
 // Validation model which comes to the API.
 export class CreatePlaylistDTO implements CreatePlaylist {
   @IsString()
-  @MinLength(10)
+  @MinLength(2)
   @MaxLength(500)
   name: string;
 

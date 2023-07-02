@@ -9,7 +9,7 @@ export interface IPlaylist {
 // 2. Create a Schema corresponding to the document interface.
 const playlistSchema = new Schema<IPlaylist>({
   name: { type: String, required: true },
-  trackIds: { type: [Schema.Types.ObjectId], required: true, default: [] },
+  trackIds: { type: [Schema.Types.ObjectId], required: true, default: [], ref: 'Track' },
 });
 
 // 3. Create a Model.

@@ -17,16 +17,17 @@ const get = async (getTrackDto: GetTrackDTO): Promise<ITrack[]> => {
         from: 'albums',
         localField: 'albumId',
         foreignField: '_id',
-        as: 'trackDetail',
+        as: 'albumDetail',
       },
     },
+
     {
       $addFields: {
         artistDetail: {
           $arrayElemAt: ['$artistDetail', 0],
         },
-        trackDetail: {
-          $arrayElemAt: ['$trackDetail', 0],
+        albumDetail: {
+          $arrayElemAt: ['$albumDetail', 0],
         },
       },
     },
@@ -55,7 +56,7 @@ const get = async (getTrackDto: GetTrackDTO): Promise<ITrack[]> => {
         isMatchAlbum: {
           $regexMatch: {
             input: {
-              $toUpper: '$trackDetail.name',
+              $toUpper: '$albumDetail.name',
             },
             regex: {
               $toUpper: getTrackDto.albumName,
@@ -92,7 +93,49 @@ const get = async (getTrackDto: GetTrackDTO): Promise<ITrack[]> => {
 };
 
 const getOne = async (trackId: string): Promise<ITrack | null> => {
-  return await Track.findById(trackId);
+  const track = await Track.aggregate([
+    {
+      $lookup: {
+        from: 'artists',
+        localField: 'artistId',
+        foreignField: '_id',
+        as: 'artistDetail',
+      },
+    },
+    {
+      $lookup: {
+        from: 'albums',
+        localField: 'albumId',
+        foreignField: '_id',
+        as: 'albumDetail',
+      },
+    },
+
+    {
+      $addFields: {
+        artistDetail: {
+          $arrayElemAt: ['$artistDetail', 0],
+        },
+        albumDetail: {
+          $arrayElemAt: ['$albumDetail', 0],
+        },
+      },
+    },
+    {
+      $match: {
+        $expr: {
+          $eq: [
+            {
+              $toString: '$_id',
+            },
+            trackId.toString(),
+          ],
+        },
+      },
+    },
+  ]);
+
+  return track[0];
 };
 
 const create = async (createTrackDto: CreateTrackDTO): Promise<TCreateResponse> => {

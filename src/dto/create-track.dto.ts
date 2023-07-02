@@ -13,7 +13,7 @@ export type CreateTrack = Pick<
 // Validation model which comes to the API.
 export class CreateTrackDTO implements CreateTrack {
   @IsString()
-  @MinLength(10)
+  @MinLength(2)
   @MaxLength(500)
   title: string;
 

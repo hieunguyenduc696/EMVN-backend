@@ -5,11 +5,15 @@ import { configuration } from './config';
 import { errorHandler } from './errors';
 import { UploadRouter, TrackRouter, ArtistRouter, PlaylistRouter, AlbumRouter } from './routes';
 import mongoose from 'mongoose';
+import cors from 'cors';
+import path from 'path';
 
 const app: Application = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+app.use('/static', express.static(path.join(__dirname, 'upload')));
 
 app.use('/upload', UploadRouter);
 app.use('/track', TrackRouter);
